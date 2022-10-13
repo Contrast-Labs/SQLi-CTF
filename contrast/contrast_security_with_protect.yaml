@@ -1,0 +1,16 @@
+api:
+  url: https://XXX.contrastsecurity.com/Contrast
+  api_key: XXX
+  service_key: XXX
+  user_name: XX
+application:
+  name: sql-ctf-with-protect
+server:
+  name: CTF-Server
+protect:
+  enabled: true
+assess:
+  enabled: true
+agent:
+  logger:
+    level: INFO

@@ -1,0 +1,13 @@
+services:
+  demo:
+    build: ./
+    ports:
+      - "8081:8080"
+  demo-with-protect:
+    build: ./
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./contrast/secret:/etc/contrast/secret
+    environment:
+      - PROTECT_ENABLED=true

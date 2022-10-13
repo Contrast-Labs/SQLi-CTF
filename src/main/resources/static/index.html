@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/html">
+<script type="text/javascript">
+
+    function loadEmail(name, tdEmail) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                tdEmail.appendChild(document.createTextNode(this.responseText));
+            }
+        };
+        xhttp.open("GET", "/getEmail?firstName=" + name, true);
+        xhttp.send();
+    }
+
+    function loadUsers() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var data = this.responseText;
+                var jsonResponse = JSON.parse(data);
+                console.log(jsonResponse);
+                var table = document.createElement('table');
+                var tr = document.createElement('tr');
+                var thName = document.createElement('th');
+                var thEmail = document.createElement('th');
+
+                thName.appendChild(document.createTextNode("Name"));
+                tr.appendChild(thName);
+                thEmail.appendChild(document.createTextNode("Email"));
+                tr.appendChild(thEmail);
+                table.appendChild(tr);
+                var row;
+                console.log("jsonResponse", jsonResponse);
+                for (var r = 0; r < jsonResponse.length; r++) {
+                    tr = document.createElement('tr');
+                    row = jsonResponse[r];
+                    var tdName = document.createElement('td');
+                    tdName.appendChild(document.createTextNode(row));
+                    tr.appendChild(tdName);
+                    var tdEmail = document.createElement('td');
+                    loadEmail(row, tdEmail);
+                    tr.appendChild(tdEmail);
+                    table.appendChild(tr);
+                }
+                document.getElementById('users').appendChild(table);
+            }
+        };
+        xhttp.open("GET", "/getFirstNames", true);
+        xhttp.send();
+    }
+
+</script>
+
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid;
+        }
+         body {
+             background-image: url('royalcat.png');
+             background-repeat: repeat-y;
+             text-align: center;
+         }
+    </style>
+</head>
+<body onload="loadUsers();">
+<H1>
+    Contrast Security CTF
+</H1>
+
+<div id="users"></div>
+
+</body>
+</html>
